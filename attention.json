@@ -1,0 +1,115 @@
+{
+  "schema": "asch.attention.v1",
+  "title": "Where the eyeballs are",
+  "generated": "2026-08-24",
+  "unit": {
+    "size": "billion hours of human attention per day, worldwide",
+    "size_short": "B h/day",
+    "color_default": "momentum"
+  },
+  "source": {
+    "name": "Digital attention deep-research report",
+    "compiled": "2026-08",
+    "note": "Industry reports and research, 2021 to 2026. Every figure below is either stated in that report or arithmetic on figures stated in it, and each tile says which."
+  },
+
+  "method": {
+    "formula": "size = reach x time. A tile's area is its audience multiplied by the time that audience gives it each day, expressed in billions of hours per day.",
+    "bases": {
+      "stated": "Both inputs are printed in the source. No arithmetic beyond a unit conversion.",
+      "derived": "Both inputs come from the source but one had to be converted or allocated. The chain is on the tile.",
+      "estimated": "An input is not in the source and an assumption was made. These tiles are hatched. Treat them as a shape, not a number."
+    },
+    "exclusions": "Watching other people play games (~8.5 h/week per player in the source) is not given its own tile, because those hours are already inside YouTube and Twitch. Counting them twice would inflate the chart by roughly 3.6 billion hours a day."
+  },
+
+  "groups": [
+    {
+      "id": "social",
+      "label": "Social and short-form",
+      "note": "5.79B users, 69.9% of the world, averaging 2h21m a day. Children are that daily budget split by each platform's stated per-user time.",
+      "children": [
+        { "id": "tiktok",    "label": "TikTok",         "minutes": 53.8, "reach": 5.79, "value": 5.192, "basis": "derived", "wiki": "TikTok",
+          "chain": "53.8 min/day stated (34 h/month). 5.79B social users x 53.8 min / 60 = 5.19B h/day.",
+          "yoy": 10.0 },
+        { "id": "facebook",  "label": "Facebook",       "minutes": 39.0, "reach": 5.79, "value": 3.764, "basis": "derived", "wiki": "Facebook",
+          "chain": "19h47m/month stated = 1,187 min / 30.44 days = 39.0 min/day. x 5.79B / 60 = 3.76B h/day.",
+          "yoy": 5.4 },
+        { "id": "instagram", "label": "Instagram",      "minutes": 31.2, "reach": 5.79, "value": 3.011, "basis": "derived", "wiki": "Instagram",
+          "chain": "15h50m/month stated = 950 min / 30.44 days = 31.2 min/day. x 5.79B / 60 = 3.01B h/day.",
+          "yoy": 5.4 },
+        { "id": "socialrest","label": "Everything else social", "minutes": 17.0, "reach": 5.79, "value": 1.640, "basis": "derived", "wiki": "Social_media",
+          "chain": "The 141 min/day social budget less the 124.0 min the three named platforms account for = 17.0 min/day. x 5.79B / 60 = 1.64B h/day. X, LinkedIn, Pinterest, Snapchat and every other platform the source does not break out are inside this tile rather than missing from the chart.",
+          "yoy": 5.4 }
+      ]
+    },
+    {
+      "id": "video",
+      "label": "Video",
+      "note": "Long-form and live. Sized on stated audience and stated time, so no allocation was needed.",
+      "children": [
+        { "id": "youtube", "label": "YouTube", "minutes": 48.7, "reach": 2.74, "value": 2.224, "basis": "stated", "wiki": "YouTube",
+          "chain": "2.74B monthly users x 48.7 min/day / 60 = 2.22B h/day. Both figures stated.",
+          "yoy": null },
+        { "id": "twitch",  "label": "Twitch",  "minutes": null, "reach": 0.224, "value": 0.057, "basis": "derived", "wiki": "Twitch_(service)",
+          "chain": "20.8B hours watched in 2024 / 365 = 57.0M h/day = 0.057B h/day. 224M monthly users stated.",
+          "yoy": null }
+      ]
+    },
+    {
+      "id": "messaging",
+      "label": "Messaging",
+      "note": "The largest single audience on the internet, and the least monetised minute on it.",
+      "children": [
+        { "id": "whatsapp", "label": "WhatsApp", "minutes": 33.0, "reach": 3.3, "value": 1.815, "basis": "stated", "wiki": "WhatsApp",
+          "chain": "3.3B monthly users x 33 min/day / 60 = 1.82B h/day. Both figures stated.",
+          "yoy": null }
+      ]
+    },
+    {
+      "id": "gaming",
+      "label": "Gaming",
+      "note": "Time at the controls only. Time spent watching other people play sits under Video, where it is already counted.",
+      "children": [
+        { "id": "playing", "label": "Playing", "minutes": 63.4, "reach": 3.0, "value": 3.171, "basis": "derived", "wiki": "Video_game",
+          "chain": "3B players x 7.4 h/week / 7 = 3.17B h/day, which is 63.4 min/day each.",
+          "yoy": null }
+      ]
+    }
+  ],
+
+  "unsized": [
+    { "label": "Search",            "reach": "79.3% of online adults monthly", "why": "The source gives reach and intent, not minutes. A query is seconds long and worth more than an hour of feed.", "wiki": "Google_Search" },
+    { "label": "Email",             "reach": "4.48B users, 361.6B sent a day",  "why": "80 emails a day per user, no time budget published.", "wiki": "Email" },
+    { "label": "Podcasts and audio","reach": "22% of adults weekly",            "why": "Episode length is given as 30 to 60 minutes but frequency is not, and most of it is second-screen time anyway.", "wiki": "Podcast" },
+    { "label": "Subscription video","reach": "Netflix ~260M subscriptions",     "why": "Subscriptions are households, not people, and no per-user daily figure is stated.", "wiki": "Netflix" },
+    { "label": "VR",                "reach": "~171M users",                    "why": "Usage described as niche and growing, with no hours attached.", "wiki": "Virtual_reality" },
+    { "label": "Voice assistants",  "reach": "~8.4B devices",                   "why": "Device count is not attention. Nobody publishes seconds spent talking to a speaker.", "wiki": "Virtual_assistant" },
+    { "label": "Wearables",         "reach": "~20% of US adults",               "why": "Glance-level attention that no current measurement framework captures.", "wiki": "Smartwatch" }
+  ],
+
+  "watch": [
+    { "label": "X (Twitter)",       "wiki": "X_(social_network)" },
+    { "label": "LinkedIn",          "wiki": "LinkedIn" },
+    { "label": "Pinterest",         "wiki": "Pinterest" },
+    { "label": "ChatGPT",           "wiki": "ChatGPT" },
+    { "label": "Threads",           "wiki": "Threads_(social_network)" },
+    { "label": "Bluesky",           "wiki": "Bluesky" },
+    { "label": "Discord",           "wiki": "Discord" },
+    { "label": "Roblox",            "wiki": "Roblox" },
+    { "label": "Telegram",          "wiki": "Telegram_(software)" },
+    { "label": "Snapchat",          "wiki": "Snapchat" },
+    { "label": "Reddit",            "wiki": "Reddit" },
+    { "label": "Spotify",           "wiki": "Spotify" },
+    { "label": "Substack",          "wiki": "Substack" },
+    { "label": "Apple Vision Pro",  "wiki": "Apple_Vision_Pro" },
+    { "label": "Perplexity",        "wiki": "Perplexity_AI" }
+  ],
+
+  "facts": [
+    "Search ads run a 6.6% click-through rate. Social feed ads run 0.5 to 0.9%. The gap is intent, and it is roughly ten to one.",
+    "About 25% of podcast listeners say they bought something they heard advertised, which is the highest purchase response of any format in the source.",
+    "After Apple's App Tracking Transparency, click-through on heavily targeted Meta ads fell 37%.",
+    "55% of 18 to 39 year olds say they have replaced streaming time with social media."
+  ]
+}

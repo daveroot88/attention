@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12191F">
+<title>Attention</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@400;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="labs.css">
+<link rel="stylesheet" href="skins.css">
+<link rel="stylesheet" href="attention.css">
+</head>
+<body>
+<div class="wrap"><main id="app"></main></div>
+<footer class="colophon" id="colophon"></footer>
+<script>
+window.__BOOT__="attention"; window.__TITLE__="Attention";
+(function(){
+  var CURRENT=null;
+  window.SCREENS=[]; window.buildStrip=function(){};
+  window.sec=function(html){var d=document.createElement("div");d.innerHTML=html;var a=document.getElementById("app");while(d.firstChild)a.appendChild(d.firstChild);};
+  window.node=function(html){var d=document.createElement("div");d.innerHTML=html.trim();return d.firstElementChild;};
+  window.route=function(id){
+    id=id||location.hash.slice(2)||window.__BOOT__;
+    if(!(window.LABS&&LABS.has(id))) id=window.__BOOT__;
+    CURRENT=id; var app=document.getElementById("app"); app.innerHTML="";
+    if(window.LABS&&LABS.has(id)){ LABS.route(id); app.dataset.labs=id; if(LABS.applySkin)LABS.applySkin(id); }
+    try{window.scrollTo({top:0});}catch(e){}
+    document.title=(window.LABS&&LABS.titleFor&&LABS.titleFor(id))||window.__TITLE__;
+  };
+  window.go=function(id){CURRENT=id;try{if(location.hash.slice(2)!==id)location.hash="#/"+id;}catch(e){}window.route(id);};
+  window.addEventListener("hashchange",function(){var id=location.hash.slice(2)||window.__BOOT__;if(id!==CURRENT)window.route(id);});
+  window.addEventListener("load",function(){window.route(location.hash.slice(2)||window.__BOOT__);});
+})();
+</script>
+<script src="bank-personality.js"></script>
+<script src="bank-ai.js"></script>
+<script src="offers.js"></script>
+<script src="art.js"></script>
+<script src="labs.js"></script>
+<script src="attention.js"></script>
+</body>
+</html>

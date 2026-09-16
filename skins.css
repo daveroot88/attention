@@ -1,0 +1,603 @@
+/* =====================================================================
+   Per-section skins
+   ---------------------------------------------------------------------
+   Each of the four new sections gets its own visual identity. Clicking a
+   chip changes `data-skin` on <html> and the whole page changes with it:
+   background, type, colour, chrome, cards, forms, buttons.
+
+   The index screens carry no data-skin at all, so nothing in this file
+   can reach them. Removing this stylesheet leaves the site exactly as it
+   was.
+
+   HOW THESE WERE DRAWN
+   Each skin takes the *conventions* of a genre, which are not anyone's
+   property, and then uses its own type, palette, spacing and layout. No
+   logo, wordmark, icon, photograph, illustration or copy is taken from
+   any of the reference sites, and no palette or typeface is reused from
+   them. Reference sites were inspected for their genre grammar only:
+
+     prometheus     modern dark AI product   (ref: aimodes.ai)
+     recruiting     print-editorial fund     (ref: militiacapital.com)
+     ai-operations  technical operations console  (no reference, original)
+     trading-dna    large-format product page (ref: apple.com)
+
+   THE CONTRACT
+   A skin redefines the token set below. index.html's own CSS already
+   consumes most of these, so redefining them re-skins most of the page
+   for free. The rest is the font overrides and the per-skin blocks.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   Generic consumers. These read skin tokens and apply to every skin, so
+   a new skin is mostly a block of custom properties.
+   --------------------------------------------------------------------- */
+html[data-skin] {
+  --sk-radius: 10px;
+  --sk-radius-lg: 14px;
+  --sk-shadow: none;
+  --sk-display: inherit;
+  --sk-body: inherit;
+  --sk-mono: ui-monospace, Menlo, monospace;
+  --sk-head-case: uppercase;
+  --sk-head-ls: .4px;
+  --sk-head-weight: 700;
+  --sk-rule: 1px solid var(--rule);
+  --sk-h2-rule: 1px solid var(--rule);
+  --sk-panel-border: 1px solid var(--rule);
+  --sk-accent: var(--steel);
+}
+
+html[data-skin] body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--sk-body);
+  background-image: var(--sk-bg-image, none);
+  background-size: var(--sk-bg-size, auto);
+  background-attachment: fixed;
+}
+html[data-skin] body::before { opacity: var(--sk-noise, 0); }
+
+html[data-skin] h1, html[data-skin] h2, html[data-skin] h3,
+html[data-skin] .tile .nm, html[data-skin] .hub .hn, html[data-skin] .offer .nm,
+html[data-skin] .dimrow .dn, html[data-skin] .factorhead .fn,
+html[data-skin] .loopstep .k, html[data-skin] .kpi .v, html[data-skin] .offer .pz {
+  font-family: var(--sk-display);
+  font-weight: var(--sk-head-weight);
+}
+html[data-skin] h1, html[data-skin] h2, html[data-skin] h3 {
+  text-transform: var(--sk-head-case);
+  letter-spacing: var(--sk-head-ls);
+}
+html[data-skin] h2 { border-bottom: var(--sk-h2-rule); }
+html[data-skin] .topbar { border-bottom: var(--sk-rule); }
+html[data-skin] .stripwrap { border-bottom: var(--sk-rule); }
+html[data-skin] .pager { border-top: var(--sk-rule); }
+html[data-skin] .colophon { border-top: var(--sk-rule); }
+
+/* panels */
+html[data-skin] .kpi, html[data-skin] .hub, html[data-skin] .offer, html[data-skin] .dimrow,
+html[data-skin] .chartbox, html[data-skin] .lform, html[data-skin] .tblwrap,
+html[data-skin] .loopstep, html[data-skin] .fitcol, html[data-skin] .vcard, html[data-skin] .tile {
+  border: var(--sk-panel-border);
+  border-radius: var(--sk-radius-lg);
+  background: var(--card);
+  box-shadow: var(--sk-shadow);
+}
+html[data-skin] .vcard { border-left-width: 3px; border-left-style: solid; }
+html[data-skin] .loopstep, html[data-skin] .fitcol { border-left-width: 3px; border-left-style: solid; }
+
+/* chrome */
+html[data-skin] .mark { font-family: var(--sk-display); color: var(--ink); }
+html[data-skin] .mark span { color: var(--sk-accent); }
+html[data-skin] .tagline, html[data-skin] .eyebrow, html[data-skin] .cap,
+html[data-skin] .mutednote, html[data-skin] .kpi .k, html[data-skin] .kpi .s,
+html[data-skin] .chip, html[data-skin] .pg, html[data-skin] .cols3 .ch,
+html[data-skin] .cols3 .sub, html[data-skin] .lform .fh, html[data-skin] .fld > label,
+html[data-skin] .offer .stage, html[data-skin] .hub .hs, html[data-skin] .hub .hstat,
+html[data-skin] .vcard .vh, html[data-skin] .fitcol .fh2, html[data-skin] .prog .pr,
+html[data-skin] .dimrow .db, html[data-skin] .factorhead .fv, html[data-skin] .formnote,
+html[data-skin] .drop .dz, html[data-skin] .btn, html[data-skin] .likert button,
+html[data-skin] .dimrow .what, html[data-skin] .scrollhint, html[data-skin] .srcline,
+html[data-skin] .hits, html[data-skin] .fld .hint, html[data-skin] .fld .err,
+html[data-skin] .filerow, html[data-skin] .pagi, html[data-skin] .colophon {
+  font-family: var(--sk-mono);
+}
+html[data-skin] .eyebrow { color: var(--sk-accent); }
+
+html[data-skin] .chip {
+  border-radius: var(--sk-chip-radius, 999px);
+  border-color: var(--rule); background: var(--card); color: var(--muted);
+}
+html[data-skin] .chip:hover { border-color: var(--sk-accent); color: var(--ink); }
+html[data-skin] .chip.on { background: var(--sk-accent); border-color: var(--sk-accent); color: var(--sk-on-accent, #fff); }
+html[data-skin] .chip.method { border-color: var(--rule); color: var(--muted); }
+html[data-skin] .chip.method.on { background: var(--sk-accent); border-color: var(--sk-accent); color: var(--sk-on-accent, #fff); }
+html[data-skin] .cscroll.l { background: linear-gradient(90deg, var(--paper) 55%, transparent); }
+html[data-skin] .cscroll.r { background: linear-gradient(270deg, var(--paper) 55%, transparent); }
+html[data-skin] .navsearch input { background: var(--card); border-color: var(--rule); color: var(--ink); font-family: var(--sk-mono); }
+
+/* controls */
+html[data-skin] .btn {
+  background: var(--sk-accent); border-color: var(--sk-accent); color: var(--sk-on-accent, #fff);
+  border-radius: var(--sk-btn-radius, 8px);
+}
+html[data-skin] .btn:hover:not([disabled]) { box-shadow: var(--sk-btn-hover, none); transform: var(--sk-btn-lift, none); }
+html[data-skin] .btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+html[data-skin] .fld input, html[data-skin] .fld select, html[data-skin] .fld textarea {
+  background: var(--sk-input-bg, var(--paper)); border-color: var(--rule); color: var(--ink);
+  border-radius: var(--sk-radius); font-family: var(--sk-body);
+}
+html[data-skin] .fld input:focus, html[data-skin] .fld select:focus, html[data-skin] .fld textarea:focus { border-color: var(--sk-accent); }
+html[data-skin] .drop { border-radius: var(--sk-radius); background: var(--sk-input-bg, var(--paper)); border-color: var(--rule); }
+html[data-skin] .drop:hover, html[data-skin] .drop.over { border-color: var(--sk-accent); }
+html[data-skin] .filerow { background: var(--sk-input-bg, var(--paper)); border-color: var(--rule); color: var(--ink); font-family: var(--sk-mono); }
+html[data-skin] .likert button { border-radius: var(--sk-radius); border-color: var(--rule); background: var(--card); color: var(--muted); }
+html[data-skin] .likert button:hover { border-color: var(--sk-accent); color: var(--ink); }
+html[data-skin] .likert button.on { background: var(--sk-accent); border-color: var(--sk-accent); color: var(--sk-on-accent, #fff); }
+html[data-skin] .prog { background: var(--paper); border-bottom: 1px solid var(--rule); }
+html[data-skin] .prog .track { background: var(--rule); }
+html[data-skin] .prog .track i { background: var(--sk-accent); }
+html[data-skin] .callout { border-color: var(--amber); background: var(--sk-callout-bg, rgba(138,100,18,.08)); color: var(--amber); border-radius: var(--sk-radius); }
+html[data-skin] .steps li::before { background: var(--sk-accent); color: var(--sk-on-accent, #fff); font-family: var(--sk-mono); }
+html[data-skin] .meter { background: var(--rule); }
+html[data-skin] .meter .pin { background: var(--ink); }
+html[data-skin] .meter .mid { background: var(--ink); }
+html[data-skin] .modebar .mt { background: var(--rule); }
+html[data-skin] .modebar .mt .tgt { background: var(--ink); }
+html[data-skin] .modebar .ml { color: var(--ink); }
+html[data-skin] .modebar, html[data-skin] .modebar .mv { font-family: var(--sk-mono); }
+html[data-skin] .tierbar { border: var(--sk-panel-border); border-radius: var(--sk-radius); }
+html[data-skin] .tierbar div { font-family: var(--sk-mono); }
+html[data-skin] .offer li::before, html[data-skin] .fitcol.yes li::before { color: var(--gain); }
+html[data-skin] .cols3 li::before { color: var(--sk-accent); }
+html[data-skin] .formmsg { border-radius: var(--sk-radius); font-family: var(--sk-mono); }
+html[data-skin] .lede { max-width: var(--sk-measure, 62ch); }
+html[data-skin] .hub:hover, html[data-skin] .tile:hover { box-shadow: var(--sk-hover-shadow, var(--sk-shadow)); transform: var(--sk-hover-lift, none); }
+
+/* =====================================================================
+   A.  PROMETHEUS
+   Genre: modern dark AI product. Midnight field, one luminous accent,
+   soft radial light behind the fold, geometric grotesque set tight,
+   generous rounding, pill tags, colour-coded tiers.
+
+   Own values throughout: Plus Jakarta Sans rather than Geist, an aqua
+   and violet pair rather than a single teal, indigo-black rather than
+   navy, and a layout that is left-aligned editorial rather than the
+   split hero the reference uses.
+   ===================================================================== */
+html[data-skin="prometheus"] {
+  --paper:#0B0D17;  --card:#141829;  --ink:#EEF1F8;  --muted:#8D96B4;
+  --rule:#242A44;   --grid:#1B2038;
+  --steel:#7CC7FF;  --gain:#3FE0B0;  --amber:#F5C563; --signal:#FF7B72;
+  --market:#4A5375;
+  --max: 1000px;
+
+  --sk-display:'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --sk-body:'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --sk-mono:'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --sk-head-case: none;
+  --sk-head-ls: -1.1px;
+  --sk-head-weight: 800;
+  --sk-accent:#3FE0B0;
+  --sk-on-accent:#06251E;
+  --sk-radius: 10px;
+  --sk-radius-lg: 16px;
+  --sk-panel-border: 1px solid var(--rule);
+  --sk-rule: 1px solid #1E2440;
+  --sk-h2-rule: none;
+  --sk-input-bg:#0E1120;
+  --sk-btn-radius: 10px;
+  --sk-measure: 60ch;
+  --sk-violet:#A78BFA;
+
+  --sk-bg-image:
+    radial-gradient(1100px 620px at 18% -12%, rgba(63,224,176,.13), transparent 62%),
+    radial-gradient(900px 560px at 88% 4%, rgba(167,139,250,.13), transparent 60%),
+    radial-gradient(700px 500px at 50% 108%, rgba(124,199,255,.07), transparent 65%);
+  --sk-bg-size: auto;
+  --sk-noise: .02;
+}
+html[data-skin="prometheus"] body { background-repeat: no-repeat; }
+html[data-skin="prometheus"] h1 { font-size: clamp(38px,6.2vw,60px); line-height: 1.02; margin: 18px 0 16px; }
+html[data-skin="prometheus"] h2 {
+  font-size: 13px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+  color: var(--sk-accent); margin: 54px 0 14px; padding: 0;
+}
+html[data-skin="prometheus"] h3 { color: var(--ink); letter-spacing: -.2px; text-transform: none; }
+html[data-skin="prometheus"] .lede { font-size: 17px; line-height: 1.62; color: #B9C1DA; }
+html[data-skin="prometheus"] .eyebrow { color: var(--sk-accent); letter-spacing: .14em; font-weight: 600; }
+html[data-skin="prometheus"] .cap, html[data-skin="prometheus"] .mutednote { color: var(--muted); letter-spacing: 0; }
+html[data-skin="prometheus"] .tagline { letter-spacing: .04em; }
+
+/* the second line of a headline picks up the accent, the way this genre does */
+html[data-skin="prometheus"] h1 br + * , html[data-skin="prometheus"] h1 .glow { color: var(--sk-accent); }
+
+html[data-skin="prometheus"] .chip { border-color: var(--rule); background: rgba(255,255,255,.03); }
+html[data-skin="prometheus"] .chip.on { color: var(--sk-on-accent); }
+html[data-skin="prometheus"] .btn { font-weight: 600; letter-spacing: .01em; text-transform: none; font-size: 13.5px; padding: 12px 20px; }
+html[data-skin="prometheus"] .btn:hover:not([disabled]) { filter: brightness(1.08); }
+html[data-skin="prometheus"] .btn.ghost { border-color: var(--rule); color: var(--ink); background: rgba(255,255,255,.03); }
+html[data-skin="prometheus"] .pg { color: var(--muted); letter-spacing: .06em; }
+html[data-skin="prometheus"] .pg:hover { color: var(--sk-accent); }
+
+/* panels get a faint inner light, which is what sells this genre */
+html[data-skin="prometheus"] .kpi, html[data-skin="prometheus"] .hub,
+html[data-skin="prometheus"] .dimrow, html[data-skin="prometheus"] .chartbox,
+html[data-skin="prometheus"] .lform, html[data-skin="prometheus"] .vcard {
+  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,0));
+  background-color: var(--card);
+}
+html[data-skin="prometheus"] .hub:hover { border-color: var(--sk-accent); }
+html[data-skin="prometheus"] .hub .hn { font-size: 21px; letter-spacing: -.4px; text-transform: none; }
+html[data-skin="prometheus"] .hub .hs, html[data-skin="prometheus"] .hub .hstat { letter-spacing: .1em; font-size: 10px; font-weight: 600; }
+html[data-skin="prometheus"] .kpi .v { letter-spacing: -1px; }
+html[data-skin="prometheus"] .kpi .k { letter-spacing: .12em; font-weight: 600; font-size: 9.5px; }
+
+/* tier colour coding: passivity amber, partnership blue, agency violet */
+html[data-skin="prometheus"] .tierbar { border-color: var(--rule); }
+html[data-skin="prometheus"] .tierbar .t-passivity { background:#F5C563; color:#3A2A05; }
+html[data-skin="prometheus"] .tierbar .t-partnership { background:#7CC7FF; color:#06233A; }
+html[data-skin="prometheus"] .tierbar .t-agency { background: var(--sk-violet); color:#231145; }
+html[data-skin="prometheus"] .modebar .mt .act { background:#7CC7FF; }
+html[data-skin="prometheus"] .modebar .mt .act.over { background: var(--amber); }
+html[data-skin="prometheus"] .meter i { background:#7CC7FF; }
+html[data-skin="prometheus"] .meter i.hi { background: var(--gain); }
+html[data-skin="prometheus"] .meter i.lo { background: var(--amber); }
+html[data-skin="prometheus"] .dimrow .dn { font-size: 17px; letter-spacing: -.3px; text-transform: none; }
+html[data-skin="prometheus"] .dimrow .db { letter-spacing: .1em; font-weight: 600; }
+html[data-skin="prometheus"] .factorhead { border-bottom: 1px solid var(--rule); }
+html[data-skin="prometheus"] .factorhead .fn { text-transform: none; letter-spacing: -.5px; font-size: 22px; }
+html[data-skin="prometheus"] .callout { border-color: rgba(245,197,99,.4); background: rgba(245,197,99,.07); color: var(--amber); }
+html[data-skin="prometheus"] .qitem { border-bottom-color: var(--rule); }
+html[data-skin="prometheus"] .qitem .qt { font-size: 17px; letter-spacing: -.2px; }
+html[data-skin="prometheus"] .qitem .qn { color: var(--market); font-weight: 600; }
+html[data-skin="prometheus"] .likert button { background: rgba(255,255,255,.03); font-weight: 600; letter-spacing: .04em; }
+html[data-skin="prometheus"] .vcards .vcard { border-left-color: var(--sk-violet); }
+html[data-skin="prometheus"] .vcard.gap { border-left-color: var(--amber); }
+html[data-skin="prometheus"] .vcard.ok { border-left-color: var(--gain); }
+html[data-skin="prometheus"] ::selection { background: var(--sk-accent); color: var(--sk-on-accent); }
+
+/* =====================================================================
+   B.  RECRUITING
+   Genre: print-editorial fund letter. Cream stock, a bold transitional
+   serif at display size, hairline rules, wide-tracked uppercase labels,
+   one muted red used sparingly and with authority.
+
+   Own values: Source Serif 4 rather than PT Serif, a browner claret
+   rather than the reference's dusty rose-red, a warmer stock, and a
+   three-column measure of our own.
+   ===================================================================== */
+html[data-skin="recruiting"] {
+  --paper:#F4F1EA;  --card:#FBF9F4;  --ink:#1B1815;  --muted:#8A8177;
+  --rule:#DCD5C9;   --grid:#E6E0D5;
+  --steel:#6E3B34;  --gain:#4A6146;  --amber:#8A6412; --signal:#8C2F26;
+  --max: 1020px;
+
+  --sk-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sk-body:'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sk-mono:'Barlow Condensed', 'Helvetica Neue', Arial, sans-serif;
+  --sk-head-case: none;
+  --sk-head-ls: -.9px;
+  --sk-head-weight: 700;
+  --sk-accent:#6E3B34;
+  --sk-on-accent:#F7F4EE;
+  --sk-radius: 3px;
+  --sk-radius-lg: 3px;
+  --sk-panel-border: 1px solid var(--rule);
+  --sk-rule: 1px solid var(--ink);
+  --sk-h2-rule: 1px solid var(--rule);
+  --sk-input-bg:#FFFFFF;
+  --sk-btn-radius: 2px;
+  --sk-chip-radius: 2px;
+  --sk-measure: 66ch;
+  --sk-bg-image: none;
+  --sk-noise: .022;
+}
+html[data-skin="recruiting"] h1 { font-size: clamp(40px,6.6vw,62px); line-height: 1.06; margin: 22px 0 18px; }
+html[data-skin="recruiting"] h2 {
+  font-size: 12px; letter-spacing: .26em; text-transform: uppercase; font-weight: 600;
+  font-family: var(--sk-mono); color: var(--sk-accent); margin: 56px 0 16px; padding-bottom: 9px;
+}
+html[data-skin="recruiting"] h3 { font-family: var(--sk-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+html[data-skin="recruiting"] .lede { font-size: 19px; line-height: 1.58; }
+html[data-skin="recruiting"] .eyebrow, html[data-skin="recruiting"] .tagline,
+html[data-skin="recruiting"] .cols3 .ch, html[data-skin="recruiting"] .cols3 .sub,
+html[data-skin="recruiting"] .lform .fh, html[data-skin="recruiting"] .fld > label {
+  letter-spacing: .24em; text-transform: uppercase; font-weight: 500;
+}
+html[data-skin="recruiting"] .cols3 .ch { color: var(--sk-accent); font-size: 11.5px; }
+html[data-skin="recruiting"] .cols3 li, html[data-skin="recruiting"] .cols3 .spec { font-size: 15.5px; line-height: 1.5; }
+html[data-skin="recruiting"] .cols3 li::before { content:"\2022"; color: var(--sk-accent); }
+html[data-skin="recruiting"] .mark { letter-spacing: .04em; }
+html[data-skin="recruiting"] .chip { font-family: var(--sk-mono); letter-spacing: .16em; font-size: 11.5px; background: transparent; }
+html[data-skin="recruiting"] .btn {
+  font-family: var(--sk-mono); letter-spacing: .18em; font-size: 13px; font-weight: 500; padding: 13px 26px;
+}
+html[data-skin="recruiting"] .btn:hover:not([disabled]) { background:#5A2F29; border-color:#5A2F29; }
+html[data-skin="recruiting"] .lform { background: transparent; border: 0; border-top: 1px solid var(--ink); padding: 18px 0 0; }
+html[data-skin="recruiting"] .lform .fh { border-bottom: 0; color: var(--sk-accent); font-size: 11.5px; }
+html[data-skin="recruiting"] .fld input, html[data-skin="recruiting"] .fld select, html[data-skin="recruiting"] .fld textarea {
+  border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; background: transparent; padding: 9px 2px;
+}
+html[data-skin="recruiting"] .fld input:focus, html[data-skin="recruiting"] .fld select:focus,
+html[data-skin="recruiting"] .fld textarea:focus { border-bottom-color: var(--sk-accent); }
+html[data-skin="recruiting"] .drop { border-radius: 0; background: transparent; border-style: dashed; }
+html[data-skin="recruiting"] .loopstep { background: transparent; border: 0; border-top: 2px solid var(--sk-accent); border-radius: 0; padding: 13px 0 0; }
+html[data-skin="recruiting"] .loopstep .k { font-family: var(--sk-mono); letter-spacing: .2em; font-size: 13px; color: var(--sk-accent); text-transform: uppercase; }
+html[data-skin="recruiting"] .loopstep .v { font-size: 15px; line-height: 1.55; }
+html[data-skin="recruiting"] .pg { font-family: var(--sk-mono); letter-spacing: .18em; }
+html[data-skin="recruiting"] .formnote, html[data-skin="recruiting"] .mutednote, html[data-skin="recruiting"] .cap {
+  font-family: var(--sk-body); font-style: italic; font-size: 13.5px; letter-spacing: 0; line-height: 1.6;
+}
+html[data-skin="recruiting"] ::selection { background: var(--sk-accent); color: var(--sk-on-accent); }
+
+/* =====================================================================
+   C.  AI OPERATIONS
+   Genre: none borrowed. This one is original, and the brief was to
+   surprise. It is an operations console: a near-black instrument panel
+   on a faint blueprint grid, machined corner ticks on every panel, a
+   heavy condensed grotesque shouting in caps, monospace everywhere
+   else, and two signal colours doing the work of a status light.
+
+   It is the right dress for the content. This section sells looking at
+   how work actually moves through a company and then rebuilding it, so
+   the page is drawn like the readout of something being measured.
+   ===================================================================== */
+html[data-skin="ai-operations"] {
+  --paper:#080A0C;  --card:#0E1216;  --ink:#E8EEF2;  --muted:#6E8291;
+  --rule:#1C242B;   --grid:#121920;
+  --steel:#38E0FF;  --gain:#4BE38C;  --amber:#FFB020; --signal:#FF5C4D;
+  --max: 1060px;
+
+  --sk-display:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --sk-body:'IBM Plex Sans', -apple-system, sans-serif;
+  --sk-mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --sk-head-case: uppercase;
+  --sk-head-ls: -1px;
+  --sk-head-weight: 800;
+  --sk-accent:#38E0FF;
+  --sk-on-accent:#04161C;
+  --sk-radius: 2px;
+  --sk-radius-lg: 2px;
+  --sk-panel-border: 1px solid var(--rule);
+  --sk-rule: 1px solid #1C242B;
+  --sk-h2-rule: none;
+  --sk-input-bg:#0A0E12;
+  --sk-btn-radius: 2px;
+  --sk-chip-radius: 2px;
+  --sk-measure: 64ch;
+
+  --sk-bg-image:
+    linear-gradient(rgba(56,224,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,224,255,.045) 1px, transparent 1px),
+    radial-gradient(900px 600px at 78% -8%, rgba(56,224,255,.07), transparent 62%);
+  --sk-bg-size: 44px 44px, 44px 44px, auto;
+  --sk-noise: .03;
+}
+html[data-skin="ai-operations"] h1 { font-size: clamp(38px,6.6vw,66px); line-height: .96; margin: 20px 0 16px; }
+html[data-skin="ai-operations"] h2 {
+  font-size: 12px; letter-spacing: .26em; font-weight: 700; font-family: var(--sk-mono);
+  color: var(--sk-accent); margin: 54px 0 14px; padding: 0 0 0 16px; position: relative;
+}
+/* every section heading gets a status light */
+html[data-skin="ai-operations"] h2::before {
+  content:""; position:absolute; left:0; top:.42em; width:7px; height:7px;
+  background: var(--sk-accent); box-shadow: 0 0 10px var(--sk-accent);
+}
+html[data-skin="ai-operations"] h3 { font-family: var(--sk-mono); letter-spacing: .2em; color: var(--muted); }
+html[data-skin="ai-operations"] .lede { font-size: 16.5px; line-height: 1.66; color:#A9BDC9; }
+html[data-skin="ai-operations"] .eyebrow { letter-spacing: .28em; font-weight: 700; }
+html[data-skin="ai-operations"] .mark { letter-spacing: .1em; }
+
+/* machined corner ticks: the detail that makes it read as an instrument */
+html[data-skin="ai-operations"] .kpi, html[data-skin="ai-operations"] .offer,
+html[data-skin="ai-operations"] .loopstep, html[data-skin="ai-operations"] .fitcol,
+html[data-skin="ai-operations"] .lform { position: relative; }
+html[data-skin="ai-operations"] .kpi::before, html[data-skin="ai-operations"] .offer::before,
+html[data-skin="ai-operations"] .loopstep::before, html[data-skin="ai-operations"] .fitcol::before,
+html[data-skin="ai-operations"] .lform::before,
+html[data-skin="ai-operations"] .kpi::after, html[data-skin="ai-operations"] .offer::after,
+html[data-skin="ai-operations"] .loopstep::after, html[data-skin="ai-operations"] .fitcol::after,
+html[data-skin="ai-operations"] .lform::after {
+  content:""; position:absolute; width:9px; height:9px; pointer-events:none;
+  border-color: var(--sk-accent); opacity:.55;
+}
+html[data-skin="ai-operations"] .kpi::before, html[data-skin="ai-operations"] .offer::before,
+html[data-skin="ai-operations"] .loopstep::before, html[data-skin="ai-operations"] .fitcol::before,
+html[data-skin="ai-operations"] .lform::before {
+  top:-1px; left:-1px; border-top:2px solid; border-left:2px solid;
+}
+html[data-skin="ai-operations"] .kpi::after, html[data-skin="ai-operations"] .offer::after,
+html[data-skin="ai-operations"] .loopstep::after, html[data-skin="ai-operations"] .fitcol::after,
+html[data-skin="ai-operations"] .lform::after {
+  bottom:-1px; right:-1px; border-bottom:2px solid; border-right:2px solid;
+}
+
+html[data-skin="ai-operations"] .offer { background:#0C1015; }
+html[data-skin="ai-operations"] .offer.featured { box-shadow: 0 0 0 1px var(--sk-accent), 0 0 34px rgba(56,224,255,.13); }
+html[data-skin="ai-operations"] .offer .stage { color: var(--sk-accent); letter-spacing: .24em; }
+html[data-skin="ai-operations"] .offer .nm { font-size: 24px; letter-spacing: -.4px; }
+html[data-skin="ai-operations"] .offer .pz { font-family: var(--sk-mono); font-weight: 700; letter-spacing: -1.5px; color: var(--ink); }
+html[data-skin="ai-operations"] .offer .pz span { color: var(--muted); letter-spacing: .16em; }
+html[data-skin="ai-operations"] .offer .tag { color: var(--sk-accent); font-size: 14px; }
+html[data-skin="ai-operations"] .offer ul { border-top-color: var(--rule); }
+html[data-skin="ai-operations"] .offer li::before { content:"\203A"; color: var(--sk-accent); font-size: 14px; }
+html[data-skin="ai-operations"] .loopstep { border-left: 1px solid var(--rule); background:#0C1015; }
+html[data-skin="ai-operations"] .loopstep .k { font-family: var(--sk-mono); color: var(--amber); letter-spacing: .2em; font-size: 14px; }
+html[data-skin="ai-operations"] .fitcol { background:#0C1015; border-left: 1px solid var(--rule); }
+html[data-skin="ai-operations"] .fitcol.yes .fh2 { color: var(--gain); }
+html[data-skin="ai-operations"] .fitcol.no .fh2 { color: var(--signal); }
+html[data-skin="ai-operations"] .fitcol .fh2 { letter-spacing: .22em; }
+html[data-skin="ai-operations"] .btn {
+  letter-spacing: .2em; font-weight: 700; font-size: 11px; padding: 13px 22px;
+  background: var(--sk-accent); color: var(--sk-on-accent);
+}
+html[data-skin="ai-operations"] .btn:hover:not([disabled]) { box-shadow: 0 0 22px rgba(56,224,255,.4); }
+html[data-skin="ai-operations"] .btn.ghost { background: transparent; border-color: var(--sk-accent); color: var(--sk-accent); }
+html[data-skin="ai-operations"] .btn.ghost:hover:not([disabled]) { background: rgba(56,224,255,.09); box-shadow: none; }
+html[data-skin="ai-operations"] .steps li::before { border-radius: 2px; font-weight: 700; }
+html[data-skin="ai-operations"] .lform { background:#0C1015; }
+html[data-skin="ai-operations"] .lform .fh { color: var(--sk-accent); letter-spacing: .24em; }
+html[data-skin="ai-operations"] .fld > label { letter-spacing: .18em; }
+html[data-skin="ai-operations"] .callout { border-color: rgba(255,176,32,.45); background: rgba(255,176,32,.07); }
+html[data-skin="ai-operations"] .pg { letter-spacing: .2em; }
+html[data-skin="ai-operations"] .chip { background: rgba(56,224,255,.04); letter-spacing: .16em; }
+html[data-skin="ai-operations"] ::selection { background: var(--sk-accent); color: var(--sk-on-accent); }
+
+/* =====================================================================
+   D.  TRADING DNA
+   Genre: large-format product page. Near-white stock, one enormous
+   tightly-tracked headline centred on the page, very long vertical
+   rhythm, borderless cards on a soft grey fill, generous rounding, a
+   single blue for anything actionable, and a full-bleed black section
+   to break the page.
+
+   Own values: our own greys, our own blue, our own rhythm, and a data
+   section the reference genre would never carry.
+   ===================================================================== */
+html[data-skin="trading-dna"] {
+  --paper:#FBFBFD;  --card:#F3F3F6;  --ink:#16161A;  --muted:#71717C;
+  --rule:#E3E3E8;   --grid:#EFEFF2;
+  --steel:#0B72E7;  --gain:#189B62;  --amber:#B67300; --signal:#D93A2B;
+  --max: 1000px;
+
+  --sk-display:-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+  --sk-body:-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+  --sk-mono:'Inter', -apple-system, sans-serif;
+  --sk-head-case: none;
+  --sk-head-ls: -1.8px;
+  --sk-head-weight: 700;
+  --sk-accent:#0B72E7;
+  --sk-on-accent:#FFFFFF;
+  --sk-radius: 12px;
+  --sk-radius-lg: 20px;
+  --sk-panel-border: 1px solid transparent;
+  --sk-rule: 1px solid var(--rule);
+  --sk-h2-rule: none;
+  --sk-input-bg:#FFFFFF;
+  --sk-btn-radius: 999px;
+  --sk-measure: 40ch;
+  --sk-bg-image: none;
+  --sk-noise: 0;
+}
+/* the centred, oversized opening this genre is built around */
+html[data-skin="trading-dna"] h1 {
+  font-size: clamp(40px,7.6vw,76px); line-height: 1.05; text-align: center;
+  margin: 54px auto 22px; max-width: 15ch; letter-spacing: -.028em;
+}
+html[data-skin="trading-dna"] #app > .eyebrow {
+  text-align: center; letter-spacing: .01em; font-size: 19px; font-weight: 600;
+  color: var(--sk-accent); text-transform: none; margin-top: 46px;
+}
+html[data-skin="trading-dna"] #app > .lede.leadin {
+  text-align: center; margin-left: auto; margin-right: auto; font-size: 21px;
+  line-height: 1.42; max-width: 34ch; color: var(--muted); letter-spacing: -.01em;
+}
+html[data-skin="trading-dna"] h2 {
+  font-size: clamp(28px,4.2vw,42px); text-align: center; letter-spacing: -.026em;
+  font-weight: 700; margin: 96px auto 16px; padding: 0; max-width: 20ch;
+}
+html[data-skin="trading-dna"] h3 { text-transform: none; letter-spacing: -.3px; color: var(--ink); font-size: 19px; }
+html[data-skin="trading-dna"] .lede { font-size: 17.5px; line-height: 1.55; color: var(--muted); letter-spacing: -.005em; }
+html[data-skin="trading-dna"] .cap, html[data-skin="trading-dna"] .mutednote,
+html[data-skin="trading-dna"] .formnote { font-size: 12.5px; letter-spacing: -.005em; color: var(--muted); line-height: 1.6; }
+
+/* borderless cards on a soft fill, which is the whole look */
+html[data-skin="trading-dna"] .kpi, html[data-skin="trading-dna"] .lform,
+html[data-skin="trading-dna"] .vcard, html[data-skin="trading-dna"] .loopstep,
+html[data-skin="trading-dna"] .fitcol, html[data-skin="trading-dna"] .chartbox {
+  border: 0; background: var(--card); border-radius: var(--sk-radius-lg); padding: 26px 28px;
+}
+/* cards size to their own content rather than stretching to the tallest,
+   which otherwise leaves two of the three mostly empty */
+html[data-skin="trading-dna"] .cols3 { gap: 22px; margin: 44px 0 8px; align-items: start; }
+html[data-skin="trading-dna"] .cols3 > div { background: var(--card); border-radius: 20px; padding: 26px 26px 20px; }
+html[data-skin="trading-dna"] .cols3 .ch {
+  border-bottom: 0; color: var(--ink); font-size: 17px; letter-spacing: -.3px;
+  text-transform: none; font-weight: 700; margin-bottom: 14px; padding-bottom: 0;
+}
+html[data-skin="trading-dna"] .cols3 li { border-bottom: 0; padding-left: 0; font-size: 14.5px; line-height: 1.5; color: var(--muted); margin-bottom: 14px; }
+html[data-skin="trading-dna"] .cols3 li::before { display: none; }
+html[data-skin="trading-dna"] .cols3 li b { color: var(--ink); font-weight: 600; }
+
+html[data-skin="trading-dna"] .steps { max-width: 62ch; margin: 30px auto; }
+html[data-skin="trading-dna"] .steps li { font-size: 16px; padding-left: 40px; padding-bottom: 18px; color: var(--muted); }
+html[data-skin="trading-dna"] .steps li::before { width: 26px; height: 26px; font-size: 12px; font-weight: 600; }
+
+/* the black break, full bleed */
+html[data-skin="trading-dna"] .callout {
+  background:#000; border: 0; color:#F2F2F4; border-radius: 24px; padding: 34px 36px;
+  font-family: var(--sk-body); font-size: 16px; line-height: 1.55; letter-spacing: -.01em;
+  margin: 60px 0; max-width: none;
+}
+html[data-skin="trading-dna"] .callout b { color:#5AC8FA; letter-spacing: .02em; font-size: 12.5px; text-transform: uppercase; margin-bottom: 10px; }
+
+html[data-skin="trading-dna"] .btn {
+  font-size: 15px; letter-spacing: -.01em; text-transform: none; font-weight: 500; padding: 13px 26px;
+}
+html[data-skin="trading-dna"] .btn:hover:not([disabled]) { background:#0A64CC; border-color:#0A64CC; }
+html[data-skin="trading-dna"] .btn.ghost { border-color: var(--rule); }
+html[data-skin="trading-dna"] .lform .fh { font-size: 22px; letter-spacing: -.5px; text-transform: none; font-weight: 700; color: var(--ink); border-bottom: 0; margin-bottom: 18px; }
+html[data-skin="trading-dna"] .fld > label { text-transform: none; letter-spacing: -.01em; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+html[data-skin="trading-dna"] .fld input, html[data-skin="trading-dna"] .fld select, html[data-skin="trading-dna"] .fld textarea {
+  border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; font-size: 15px;
+}
+html[data-skin="trading-dna"] .drop { border-radius: 16px; padding: 28px 16px; background:#fff; }
+html[data-skin="trading-dna"] .drop .dz { font-family: var(--sk-body); font-size: 14px; letter-spacing: -.01em; }
+html[data-skin="trading-dna"] .filerow { border-radius: 10px; background:#fff; font-family: var(--sk-body); font-size: 13px; }
+html[data-skin="trading-dna"] .chip { letter-spacing: -.005em; text-transform: none; font-size: 12.5px; font-weight: 500; padding: 6px 14px; }
+html[data-skin="trading-dna"] .topbar, html[data-skin="trading-dna"] .stripwrap { border-bottom-color: var(--rule); }
+html[data-skin="trading-dna"] .tagline { text-transform: none; letter-spacing: -.005em; font-size: 12px; }
+html[data-skin="trading-dna"] .pg { text-transform: none; letter-spacing: -.01em; font-size: 14px; color: var(--sk-accent); }
+html[data-skin="trading-dna"] .formmsg { font-family: var(--sk-body); font-size: 14px; letter-spacing: -.01em; border-radius: 14px; }
+html[data-skin="trading-dna"] ::selection { background: var(--sk-accent); color:#fff; }
+@media (max-width:620px){
+  html[data-skin="trading-dna"] h1 { margin-top: 30px; }
+  html[data-skin="trading-dna"] h2 { margin-top: 62px; }
+  html[data-skin="trading-dna"] .cols3 > div { padding: 20px; }
+}
+
+/* ---------- artwork, per skin --------------------------------------- */
+html[data-skin] .artbox{ border: var(--sk-panel-border); border-radius: var(--sk-radius-lg);
+  background: var(--card); box-shadow: var(--sk-shadow); }
+html[data-skin] .artcap{ font-family: var(--sk-mono); }
+
+/* A: luminous panel, art sits on the field rather than in a box */
+html[data-skin="prometheus"] .artbox{
+  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,0));
+  background-color: var(--card);
+}
+html[data-skin="prometheus"] .artbox:has(.art-constellation){ background: none; border: 0; padding: 0; }
+html[data-skin="prometheus"] .artlbl{ letter-spacing:.14em; font-weight:600; }
+html[data-skin="prometheus"] .artcap b{ color: var(--sk-accent); }
+
+/* B: print. No box at all, just a rule above and a caption below */
+html[data-skin="recruiting"] .artbox{
+  border: 0; border-top: 1px solid var(--ink); border-radius: 0;
+  background: transparent; padding: 16px 0 0; margin: 30px 0;
+}
+html[data-skin="recruiting"] .artcap{ font-family: var(--sk-body); font-style: italic; font-size: 13.5px; letter-spacing: 0; }
+html[data-skin="recruiting"] .artcap b{ font-family: var(--sk-mono); font-style: normal; letter-spacing:.2em;
+  color: var(--sk-accent); font-size: 11px; }
+
+/* C: instrument panel, with the same machined corners as everything else */
+html[data-skin="ai-operations"] .artbox{ background:#0C1015; position: relative; }
+html[data-skin="ai-operations"] .artbox::before,
+html[data-skin="ai-operations"] .artbox::after{
+  content:""; position:absolute; width:9px; height:9px; pointer-events:none;
+  border-color: var(--sk-accent); opacity:.55;
+}
+html[data-skin="ai-operations"] .artbox::before{ top:-1px; left:-1px; border-top:2px solid; border-left:2px solid; }
+html[data-skin="ai-operations"] .artbox::after{ bottom:-1px; right:-1px; border-bottom:2px solid; border-right:2px solid; }
+html[data-skin="ai-operations"] .artcap b{ color: var(--sk-accent); letter-spacing:.2em; }
+html[data-skin="ai-operations"] .artlbl{ letter-spacing:.16em; }
+
+/* D: borderless, soft fill, lots of air, caption centred under the art */
+html[data-skin="trading-dna"] .artbox{
+  border: 0; background: var(--card); border-radius: 24px; padding: 30px 26px 20px; margin: 34px 0;
+}
+html[data-skin="trading-dna"] .artbox:has(.art-helix){ background: none; padding: 10px 0 0; margin: 6px 0 40px; }
+html[data-skin="trading-dna"] .artcap{ font-family: var(--sk-body); font-size: 14px; letter-spacing:-.01em; text-align: center; }
+html[data-skin="trading-dna"] .artcap b{ display: block; font-size: 13px; letter-spacing:.02em; color: var(--muted);
+  text-transform: none; margin: 0 0 4px; }
+html[data-skin="trading-dna"] .artlbl{ font-family: var(--sk-body); letter-spacing:.06em; font-size: 10px; }
